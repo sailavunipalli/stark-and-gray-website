@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Stark and Gray mark">
+  <polygon points="80,80 320,200 80,160" fill="#ffffff"/>
+  <polygon points="80,240 320,200 80,320" fill="#8B8B8B"/>
+  <circle cx="335" cy="200" r="7" fill="#CC1B1B"/>
+</svg>
