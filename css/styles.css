@@ -172,6 +172,8 @@ button, input, textarea, select { font: inherit; color: inherit; }
 }
 .navlinks a:hover { color: var(--text); }
 .navlinks a:hover::after { transform: scaleX(1); }
+.navlinks a.is-active { color: var(--text); }
+.navlinks a.is-active::after { transform: scaleX(1); background: var(--gray); }
 
 .nav-cta {
   display: inline-flex;
@@ -343,6 +345,12 @@ button, input, textarea, select { font: inherit; color: inherit; }
   animation: fadeUp 1s var(--ease) 0.85s both;
 }
 .hero__headline em { font-style: normal; color: var(--gray); }
+.rot {
+  display: inline-block;
+  color: var(--text);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.rot.is-swap { opacity: 0; transform: translateY(9px); }
 
 .hero__sub {
   margin-top: 26px;

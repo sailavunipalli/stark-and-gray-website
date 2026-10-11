@@ -106,19 +106,72 @@
     track.dataset.cloned = 'true';
   });
 
-  /* ---------- 7. Contact form (front-end only) ---------- */
+  /* ---------- 7. Rotating headline word ---------- */
+  var rot = document.querySelector('.rot');
+  if (rot && rot.dataset.words && !prefersReduced) {
+    var words = rot.dataset.words.split(',').map(function (w) { return w.trim(); }).filter(Boolean);
+    var interval = parseInt(rot.dataset.interval, 10) || 2600;
+    var idx = 0;
+    if (words.length > 1) {
+      setInterval(function () {
+        rot.classList.add('is-swap');
+        window.setTimeout(function () {
+          idx = (idx + 1) % words.length;
+          rot.textContent = words[idx];
+          rot.classList.remove('is-swap');
+        }, 400);
+      }, interval);
+    }
+  }
+
+  /* ---------- 8. Scroll-spy: active nav link ---------- */
+  var spyLinks = Array.prototype.slice.call(document.querySelectorAll('.navlinks a[href^="#"]'));
+  var spy = [];
+  spyLinks.forEach(function (a) {
+    var target = document.querySelector(a.getAttribute('href'));
+    if (target) spy.push({ a: a, s: target });
+  });
+  function runSpy() {
+    if (!spy.length) return;
+    var pos = window.scrollY + NAV_OFFSET + 80;
+    var current = null;
+    spy.forEach(function (t) { if (t.s.offsetTop <= pos) current = t.a; });
+    spy.forEach(function (t) { t.a.classList.toggle('is-active', t.a === current); });
+  }
+  window.addEventListener('scroll', runSpy, { passive: true });
+  runSpy();
+
+  /* ---------- 9. Audit form → mailto (works on any static host) ---------- */
   var form = document.querySelector('.form');
   if (form) {
     var status = form.querySelector('.form__status');
+    var val = function (sel) { var el = form.querySelector(sel); return el ? el.value.trim() : ''; };
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
-      var name = (form.querySelector('#name') || {}).value || '';
-      var my = status || null;
-      if (my) {
-        my.textContent = 'Request received' + (name ? ', ' + name.split(' ')[0] : '') +
-          '. We\u2019ll review your setup and reply within one business day.';
-        my.classList.add('is-visible');
+
+      var name = val('#name');
+      var email = val('#email');
+      var business = val('#business');
+      var leak = val('#leak');
+
+      var subject = 'Automation audit request' + (business ? ' \u2014 ' + business : '');
+      var body =
+        'Name: ' + name + '\n' +
+        'Business: ' + business + '\n' +
+        'Email: ' + email + '\n\n' +
+        'Where leads are leaking:\n' + leak + '\n';
+
+      var mailto = 'mailto:hello@starkandgray.com' +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(body);
+
+      window.location.href = mailto;
+
+      if (status) {
+        status.textContent = 'Opening your mail client' + (name ? ', ' + name.split(' ')[0] : '') +
+          ' \u2014 your request is addressed to hello@starkandgray.com.';
+        status.classList.add('is-visible');
       }
       form.reset();
     });
