@@ -137,6 +137,16 @@ button, input, textarea, select { font: inherit; color: inherit; }
   background: rgba(13, 13, 13, 0.86);
   border-bottom-color: var(--border-subtle);
 }
+.topnav__progress {
+  position: absolute;
+  left: 0; bottom: -1px;
+  height: 2px;
+  width: 0;
+  background: var(--accent);
+  opacity: 0.9;
+  transition: width 0.12s linear;
+  pointer-events: none;
+}
 
 .brand { display: flex; align-items: center; gap: 13px; }
 .brand__mark { width: 26px; height: 26px; }
@@ -256,7 +266,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
    ============================================================ */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -865,14 +875,28 @@ button, input, textarea, select { font: inherit; color: inherit; }
    ============================================================ */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(26px);
+  transform: translateY(20px);
   transition:
-    opacity 0.9s var(--ease),
-    transform 0.9s var(--ease);
+    opacity 0.8s var(--ease),
+    transform 0.8s var(--ease);
   transition-delay: var(--d, 0ms);
   will-change: opacity, transform;
 }
 [data-reveal].is-in { opacity: 1; transform: none; }
+
+/* reveal variants */
+[data-reveal="fade"] { transform: none; }
+[data-reveal="scale"] { transform: translateY(14px) scale(0.985); }
+[data-reveal="left"] { transform: translateX(-24px); }
+[data-reveal="right"] { transform: translateX(24px); }
+
+/* cards get a slightly softer rise + scale */
+.sys[data-reveal],
+.principle[data-reveal],
+.studio__cell[data-reveal] { transform: translateY(24px) scale(0.99); }
+
+/* steps slide in gently from the left */
+.step[data-reveal] { transform: translateX(-18px); }
 
 /* ============================================================
    RESPONSIVE
@@ -890,14 +914,26 @@ button, input, textarea, select { font: inherit; color: inherit; }
   .step__desc { grid-column: 2 / 3; }
   .verticals { grid-template-columns: 1fr; gap: 0; }
   .statement__stats { grid-template-columns: 1fr; }
+  .section__head { gap: 24px; }
 }
 @media (max-width: 560px) {
   .section { padding: 92px 0; }
   .form__row { grid-template-columns: 1fr; }
   .principles { grid-template-columns: 1fr; }
-  .hero__actions { flex-direction: column; width: 100%; }
-  .hero__actions .btn { justify-content: center; }
+  .hero__actions { flex-direction: column; width: 100%; gap: 16px; margin-top: 36px; margin-bottom: 48px; }
+  .hero__actions .btn { justify-content: center; width: 100%; }
   .contact__row .v { text-align: right; }
+  .hero__word { gap: 0.2em; }
+  .hero__tag { padding-left: 0; }
+  .hero { min-height: 100svh; padding-top: calc(var(--nav-h) + 40px); }
+  .hero__headline { margin-top: 40px; }
+  .hero__sub { margin-top: 20px; padding: 0 8px; }
+  .topnav { padding: 0 16px; }
+  .brand__name { letter-spacing: 0.2em; }
+  .sys { padding: 28px 24px 32px; }
+  .principle { padding: 32px 24px 36px; }
+  .studio__cell { padding: 32px 24px; }
+  .step { grid-template-columns: 70px 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {

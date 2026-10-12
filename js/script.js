@@ -46,14 +46,23 @@
     });
   });
 
-  /* ---------- 3. Nav scroll state ---------- */
+  /* ---------- 3. Nav scroll state + scroll progress ---------- */
   var nav = document.querySelector('.topnav');
+  var progress = document.querySelector('.topnav__progress');
   function onScroll() {
-    if (!nav) return;
-    if (window.scrollY > 12) nav.classList.add('is-scrolled');
-    else nav.classList.remove('is-scrolled');
+    if (nav) {
+      if (window.scrollY > 12) nav.classList.add('is-scrolled');
+      else nav.classList.remove('is-scrolled');
+    }
+    if (progress) {
+      var doc = document.documentElement;
+      var max = (doc.scrollHeight - window.innerHeight) || 1;
+      var pct = Math.min(1, Math.max(0, window.scrollY / max));
+      progress.style.width = (pct * 100) + '%';
+    }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
   onScroll();
 
   /* ---------- 4. Mobile menu ---------- */
@@ -141,7 +150,26 @@
   window.addEventListener('scroll', runSpy, { passive: true });
   runSpy();
 
-  /* ---------- 9. Audit form → mailto (works on any static host) ---------- */
+  /* ---------- 9. Subtle hero parallax on scroll ---------- */
+  if (!prefersReduced) {
+    var heroMark = document.querySelector('.hero__mark');
+    var heroWord = document.querySelector('.hero__word');
+    var heroTag = document.querySelector('.hero__tag');
+    var ticking = false;
+    function parallax() {
+      ticking = false;
+      var y = window.scrollY;
+      if (y > window.innerHeight) return;
+      if (heroMark) heroMark.style.transform = 'translateY(' + (y * 0.12) + 'px)';
+      if (heroWord) heroWord.style.transform = 'translateY(' + (y * 0.07) + 'px)';
+      if (heroTag) heroTag.style.transform = 'translateY(' + (y * 0.04) + 'px)';
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(parallax); }
+    }, { passive: true });
+  }
+
+  /* ---------- 10. Audit form → mailto (works on any static host) ---------- */
   var form = document.querySelector('.form');
   if (form) {
     var status = form.querySelector('.form__status');
