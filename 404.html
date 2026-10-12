@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Stark &amp; Gray</title>
+  <meta name="description" content="That page isn't here. Head back to Stark &amp; Gray.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0D0D0D">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100;300;400;500;600;700;800;900&family=Geist+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <main class="nf">
+    <div class="wrap nf__inner">
+
+      <a class="nf__brand" href="index.html" aria-label="Stark and Gray — home">
+        <svg class="brand__mark" viewBox="0 0 400 400" aria-hidden="true">
+          <polygon points="80,80 320,200 80,160" fill="#ffffff"/>
+          <polygon points="80,240 320,200 80,320" fill="#8B8B8B"/>
+          <circle cx="335" cy="200" r="7" fill="#CC1B1B"/>
+        </svg>
+        <span class="brand__name">STARK <span>GRAY</span></span>
+      </a>
+
+      <div class="nf__code">404</div>
+
+      <h1 class="nf__title">This page doesn't exist.</h1>
+
+      <p class="nf__copy">
+        The link you followed is broken, or the page moved. Either way,
+        the system is still running. Head back to the homepage.
+      </p>
+
+      <div class="nf__actions">
+        <a class="btn btn--solid" href="index.html">
+          Back to home
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn--ghost" href="index.html#contact">Request an audit</a>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // If served at a repo subpath (e.g. /stark-and-gray-website/404.html),
+    // keep the home links pointing at the site root.
+    (function () {
+      var base = location.pathname.replace(/\/[^/]*$/, '/');
+      document.querySelectorAll('a[href^="index.html"]').forEach(function (a) {
+        a.setAttribute('href', base + a.getAttribute('href'));
+      });
+    })();
+  </script>
+
+</body>
+</html>
