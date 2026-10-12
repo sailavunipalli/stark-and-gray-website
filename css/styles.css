@@ -362,9 +362,10 @@ button, input, textarea, select { font: inherit; color: inherit; }
 }
 
 .hero__actions {
-  margin-top: 46px;
+  margin-top: 48px;
+  margin-bottom: 64px;
   display: flex;
-  gap: 14px;
+  gap: 24px;
   flex-wrap: wrap;
   justify-content: center;
   animation: fadeUp 1s var(--ease) 1.15s both;
@@ -398,7 +399,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   font-family: var(--mono);
   font-size: 9px;
   letter-spacing: 0.4em;
